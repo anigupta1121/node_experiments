@@ -2,8 +2,11 @@ const chngpass = require('../config/chngpass');
 const register = require('../config/register');
 const login = require('../config/login');
 
+const session = require('express-session');
+
 
 module.exports = function (app) {
+    app.use(session({secret: "Shh, its a secret!"}));
 
     app.get('/', function (req, res) {
 
@@ -23,19 +26,19 @@ module.exports = function (app) {
 
 
     app.post('/register', function (req, res) {
-        console.log(req.body );
+        console.log(req.body);
         let email = req.body.Email;
         let password = req.body.Password;
 
 
-       register.register(email, password, function (found) {
+        register.register(email, password, function (found) {
             console.log(found);
             res.json(found);
         });
     });
 
 
-   app.post('/api/chngpass', function (req, res) {
+    app.post('/api/chngpass', function (req, res) {
         var id = req.body.id;
         var opass = req.body.oldpass;
         var npass = req.body.newpass;
@@ -54,14 +57,19 @@ module.exports = function (app) {
         chngpass.respass_init(email, function (found) {
             console.log(found);
             //res.json(found);
-            res.redirect("http://localhost:63343/untitled4/views/VerifyCode.html?="+email)
+            if (!req.session.email) {
+                req.session.email = email;
+            }
+
+            res.redirect("http://localhost:63343/untitled4/views/VerifyCode.html?=" + email);
         });
     });
 
 
     app.post('/api/resetpass/chg', function (req, res) {
 
-        let email = req.body.email;
+        let email = req.session.email;
+        console.log(email);
         let code = req.body.code;
         let npass = req.body.newpass;
 
