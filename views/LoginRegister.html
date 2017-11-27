@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+</head>
+<body>
+<b>REGISTER:</b><br/>
+<form action="http://localhost:3000/register" method="post">
+    Email :  <input type="text"name="Email"><br/>
+    Password:<input type="password" name="Password"><br/>
+    <input type="submit">
+</form>
+<br/>
+
+<b>LOGIN:</b><br/>
+<form action="http://localhost:3000/login" method="post" >
+    Email :  <input type="text"name="Email"><br/>
+    Password:<input type="password" name="Password"><br/>
+    <input type="submit">
+</form>
+<br/>
+<form action="http://localhost:3000/api/resetpass" method="post">
+    Email :  <input type="text"name="Email"><br/>
+    <input type="submit" >
+</form>
+</body>
+</html>
